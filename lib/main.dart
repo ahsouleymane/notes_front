@@ -43,10 +43,13 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
   }
 
-  void _retrieveNotes() async {
+  _retrieveNotes() async {
     notes = [];
 
     List response = json.decode((await client.get(retrieveUrl)).body);
+    response.forEach((element) { 
+      notes.add(Note.fromMap(element));
+    });
   }
 
   void _addNote() {}
@@ -57,10 +60,13 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const <Widget>[Text("Note 1")],
-      ),
+      body: ListView.builder(
+          itemCount: notes.length,
+          itemBuilder: (BuildContext context, int index) {
+            return ListTile(
+              title: Text(notes[index].note),
+            );
+          }),
       floatingActionButton: FloatingActionButton(
         onPressed: _addNote,
         tooltip: 'Increment',

@@ -29,7 +29,7 @@ class Note {
   factory Note.fromMap(Map<String, dynamic> map) {
     return Note(
       id: map['id'] as int,
-      note: map['note'] as String,
+      note: map['body'] as String,
     );
   }
 
